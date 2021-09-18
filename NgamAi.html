@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang này để ngắm Ái</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/EasePack.min.js"></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background: #222;
+        overflow: hidden;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <script>
+      console.clear();
+
+      var n,
+        boxes = [],
+        column = -1,
+        c = document.getElementById("c"),
+        ctx = c.getContext("2d"),
+        ImgBox = function (i) {
+          if (i % 5 == 0) column++;
+
+          this.index = i;
+          this.img = new Image();
+          let hix = Math.floor(Math.random() * 24);
+          this.img.src = "/Ai/"+  hix + ".jpg";
+          this.x = 300 * column;
+          this.y = this.progress = 0;
+
+          var r = column % 2 == 0;
+          this.tl = gsap
+            .timeline({ repeat: -1, defaults: { duration: 1, ease: "none" } })
+            .fromTo(
+              this,
+              { y: r ? 1600 : -400, progress: 0 },
+              { y: r ? -400 : 1600, progress: 1 },
+              0
+            )
+            .play((this.index % 5) / 5)
+            .timeScale(gsap.utils.wrap([0.006, 0.01, 0.002, 0.001], column));
+
+          this.draw = function () {
+            if (!this.img.complete) return;
+            ctx.translate(this.x, this.y);
+            ctx.drawImage(
+              this.img,
+              0,
+              0,
+              300,
+              400,
+              0,
+              0,
+              300,
+              400
+            );
+            ctx.translate(-this.x, -this.y);
+          };
+        };
+
+      window.onload = function () {
+        n = Math.ceil(1 + window.innerWidth / 300) * 5;
+        c.width = (n / 5) * 300;
+        c.height = 1600;
+
+        for (var i = 0; i < n; i++) boxes.push(new ImgBox(i));
+
+        gsap.ticker.add(onTick);
+      };
+
+      function onTick() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        for (var i = 0; i < n; i++) boxes[i].draw();
+      }
+
+      gsap.set(c, {
+        position: "fixed",
+        left: "54%",
+        top: -270,
+        xPercent: -59,
+        rotate: 15,
+      });
+
+    </script>
+  </body>
+</html>
