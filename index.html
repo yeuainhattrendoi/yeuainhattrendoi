@@ -22,14 +22,48 @@
   <body>
     <div class="bg-image"></div>
     <div class="snow_falling"></div>
+    <div id="wave" class="wave-container">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
 
     <div class="bg-text">
       <h2>Tui muốn nói cho cả thế giới biết là</h2>
       <h1 style="font-size: 50px">Yêu Ái nhất trên đời</h1>
       <p>Bấm vào để nghe nhạc nè</p>
-      <audio controls>
+      <audio id="audio_player" controls>
         <source src="music/yeu_la_khi.m4a"/>
       </audio>
     </div>
+
+    <script>
+      var vid = document.getElementById("audio_player");
+      var wave = document.getElementById("wave");
+      vid.onplay = function() {
+          wave.style.display = 'block';
+      };
+
+      vid.onpause = function() {
+          wave.style.display = 'none';
+      };
+    </script>
   </body>
 </html>
